@@ -1,0 +1,178 @@
+<html>
+	<head>
+		<link href="https://fonts.googleapis.com/css?family=Khand" rel="stylesheet">
+		<script src="sudoku.js"></script>
+		<style>
+			html,body{
+				margin : 0;
+				width : 100%;
+				height : 100%;
+				overflow : hidden;
+			}
+			.container{
+				display:grid;
+				grid-template-rows : 75vh 25vh;
+				grid-template-columns: 5vw 90vw 5vw;
+				grid-template-areas: 'game game game'
+									 'ff ff ff';
+				align-items : center;
+				justify-items :center;
+				width : 100%;
+				height : 100%;
+			}
+			
+			.game{
+				grid-area : game;
+				display: grid;
+				grid-template-rows: repeat(9,1fr);
+				grid-template-columns: repeat(9,1fr);
+				z-index : 2;
+				user-select: none;
+				 
+			}
+			.cell{
+				grid-row : auto;
+				grid-column	:auto;
+				border : 1px solid black;
+				text-align: center;
+				font-size : 4.5vh;
+				line-height: 6.5vh;
+				z-index : 2;
+				
+			}
+			.boxer{
+				grid-area : game;
+				display: grid;
+				grid-template-rows: repeat(3,1fr);
+				grid-template-columns: repeat(3,1fr);
+				
+			}
+			.boxerCell{
+				grid-row : auto;
+				grid-column	:auto;
+				border : 5px solid #151515;
+				
+			}
+			.answerGrid {
+				grid-area : ff;
+				flex-direction : row;
+				background-color : white;
+				flex-wrap: wrap;
+  				align-content: center;
+				z-index:2;
+			}
+			.insertCell{
+				border-radius: 50%;
+				font-size: 4.5vh;
+				line-height: 7.7vh;
+				text-align: center;
+				cursor: pointer;
+				width: 12vw;
+				background: #2eb7108a;
+				margin: 2vw;
+			}
+			.insertCell:active{
+				opacity  : #e75903;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="game">
+			</div>
+			<div class="boxer">
+			</div>
+			<div class="answerGrid">
+		</div>
+		</div>
+		
+	</body>
+	<script>
+		let willow = sudoku.generate(25);
+		let values = sudoku.board_string_to_grid(willow);
+			values = values.reduce((t,x)=>t.concat(x));
+			values = values.map(x=>x=='.'?" ":x);
+		let solution = sudoku.board_string_to_grid(sudoku.solve(willow));
+	
+		let answerGrid = document.getElementsByClassName('answerGrid')[0];
+			answerGrid.style.display = "none";
+			
+		let openCell = -1;
+			
+		let insertCell = new Array(12).fill(1).map((x,i)=>{ 
+			x = document.createElement('div');
+			x.className = 'insertCell';
+			if(i<9)  { 
+				x.innerText = i+1;
+				x.addEventListener('click', function (e) {
+				document.getElementsByClassName('cell')[openCell].innerText = i+1;
+				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
+				answerGrid.style.display = "none";
+				},false);
+			}
+			else if(i==9) {
+				x.innerText ="✖";
+				x.addEventListener('click', function (e) {
+				document.getElementsByClassName('cell')[openCell].innerText = " ";
+				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
+				answerGrid.style.display = "none";
+				},false);
+			}
+			else if(i==10) {
+				x.innerText = '❖';
+				x.addEventListener('click', function (e) {
+				answerGrid.style.display = "none";
+				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
+				},false);	
+			}
+			else if(i==11) {
+				x.innerText = '✈';
+				x.addEventListener('click', function (e) {
+				answerGrid.style.display = "none";
+				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
+				},false);	
+			}
+			
+			answerGrid.appendChild(x);
+		});
+		
+		let insertion = (x) => {
+			
+			answerGrid.style.display = "flex";
+			if(openCell!=-1) {document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";}
+			
+			openCell = x;
+			document.getElementsByClassName('cell')[openCell].style.backgroundColor = "#ead620c4";	
+		}
+	
+		let boxer = document.getElementsByClassName("boxer")[0];
+			boxer.style.height = '60vh';
+			boxer.style.width = '60vh';
+		
+		let boxerCell = new Array(9).fill(1).map(x=>{ 
+			x = document.createElement('div');
+			x.className = 'boxerCell';
+			boxer.appendChild(x);
+		})
+		
+		let game = document.getElementsByClassName("game")[0];
+			game.style.height = '60vh';
+			game.style.width = '60vh';
+		
+		
+		let cells = new Array(81).fill(1).map((x,i)=>{ 
+			x = document.createElement('div');
+			x.className = 'cell';
+			x.innerText = values[i];
+			if(values[i]==" "){
+				x.addEventListener('click', function (e) {
+				insertion(i);
+				},false);
+			}
+			game.appendChild(x);
+			
+		});		
+	
+	</script>
+	
+</html>
