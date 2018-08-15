@@ -1,6 +1,12 @@
 <html>
 	<head>
-		<link href="https://fonts.googleapis.com/css?family=Khand" rel="stylesheet">
+		<title>सुडोकु</title>
+		<meta http-equiv="Content-Language" content="hi">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="manifest" href="manifest.json">
+		<meta name="viewport" content="width=device-width">
+		<meta name="mobile-web-app-capable" content="yes">
+		<link rel="icon" sizes="192x192" href="assets/akshara.png">
 		<script src="js/sudoku.js"></script>
 		<style>
 			html,body{
@@ -188,11 +194,22 @@
 				x.addEventListener('click', function (e) {
 				insertion(i);
 				},false);
+				x.style.color = "#006eff";
 			}
 			game.appendChild(x);
-			
 		});		
 	
 	</script>
+	<script>
+  	if ('serviceWorker' in navigator) {
+    	console.log("Will the service worker register?");
+    	navigator.serviceWorker.register('service-worker.js')
+      .	then(function(reg){
+			console.log("Yes, it did.");
+      	}).catch(function(err) {
+        	console.log("No it didn't. This happened: ", err)
+      	});
+  	}
+</script>
 	
 </html>
