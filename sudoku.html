@@ -8,6 +8,7 @@
 		<meta name="mobile-web-app-capable" content="yes">
 		<link rel="icon" sizes="192x192" href="assets/akshara.png">
 		<script src="js/sudoku.js"></script>
+		<script src="js/noSleep.js"></script>
 		<style>
 			html,body{
 				margin : 0;
@@ -16,7 +17,7 @@
 				overflow : hidden;
 			}
 			.container{
-				display:grid;
+				display:none;
 				grid-template-rows : 70vh 30vh;
 				grid-template-columns: 2vw 96vw 2vw;
 				grid-template-areas: 'game game game'
@@ -44,7 +45,6 @@
 				font-size : 4.0vh;
 				line-height : 6.0vh;
 				z-index : 2;
-				
 			}
 			.boxer{
 				grid-area : game;
@@ -87,6 +87,30 @@
 					width: 7vh;
 				}
 			}
+			.difficulty {
+				position :absolute;
+				display : flex;
+				flex-direction: column;
+				top : 35vh;
+				width : 30vw;
+				left : 35vw;
+				height : 30vh;
+				justify-content: center;
+			}
+			
+			.levels {
+				margin-bottom : 2vh;
+				color : white;
+				border-radius : 10%;
+				background: #5959ffb8;
+				text-align: center;
+				height : 100%;
+				width : 100%;
+				font-size : 5vh;
+				line-height: 9vh;
+				cursor : pointer;
+			}
+			
 		</style>
 	</head>
 	<body>
@@ -98,10 +122,28 @@
 			<div class="answerGrid">
 		</div>
 		</div>
+		<div class="difficulty">
+				<div class="levels" onclick = "setGame('easy')">आसान 
+				</div>
+				<div class ="levels" onclick = "setGame('medium')">सामान्य 
+				</div>
+				<div class ="levels" onclick = "setGame('hard')">कठिन 
+				</div>
+		</div>
 		
 	</body>
 	<script>
-		let willow = sudoku.generate(45);
+		let willow;
+		let difficulty = document.getElementsByClassName('difficulty')[0];
+		
+		let setGame = (type) =>
+		{
+			document.getElementsByClassName('container')[0].style.display = 'grid';
+			willow = sudoku.generate(type);
+			difficulty.style.display = "none";
+		
+		
+	
 		let values = sudoku.board_string_to_grid(willow);
 			values = values.reduce((t,x)=>t.concat(x));
 			values = values.map(x=>x=='.'?" ":x);
@@ -143,6 +185,10 @@
 				x.addEventListener('click', function (e) {
 				answerGrid.style.display = "none";
 				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
+				if (window.confirm('क्या आपको नई सुडोकु चाहिए ?'))
+				{
+				   location.reload();
+				}
 				},false);	
 			}
 			
@@ -196,10 +242,22 @@
 				insertion(i);
 				},false);
 				x.style.color = "#006eff";
+				x.style.cursor = "pointer";
 			}
 			game.appendChild(x);
-		});		
-	
+		});	
+			
+		var noSleep = new NoSleep();
+
+		function enableNoSleep() {
+		  noSleep.enable();
+		  document.removeEventListener('touchstart', enableNoSleep, false);
+		}
+
+// Enable wake lock.
+// (must be wrapped in a user input event handler e.g. a mouse or touch handler)
+document.addEventListener('touchstart', enableNoSleep, false);
+		}
 	</script>
 	<script>
   	if ('serviceWorker' in navigator) {
