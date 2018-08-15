@@ -14,7 +14,7 @@
 				grid-template-rows : 70vh 30vh;
 				grid-template-columns: 2vw 96vw 2vw;
 				grid-template-areas: 'game game game'
-									 'ff ff ff';
+									 'bl ff br';
 				align-items : center;
 				justify-items :center;
 				width : 100%;
@@ -28,8 +28,6 @@
 				grid-template-columns: repeat(9,1fr);
 				z-index : 2;
 				user-select: none;
-				width : 50%;
-				height : 80%;
 				 
 			}
 			.cell{
@@ -38,7 +36,6 @@
 				border : 1px solid black;
 				text-align: center;
 				font-size : 4.5vh;
-				line-height: 5.5vh;
 				z-index : 2;
 				
 			}
@@ -47,8 +44,6 @@
 				display: grid;
 				grid-template-rows: repeat(3,1fr);
 				grid-template-columns: repeat(3,1fr);
-				width : 60%;
-				height : 80%;
 				
 			}
 			.boxerCell{
@@ -80,15 +75,9 @@
 			.insertCell:active{
 				opacity  : #e75903;
 			}
-			@media only screen and (min-width: 1024px) {
+			@media only screen and (max-width: 600px) {
 				.insertCell{
 					width: 7vh;
-				}
-				.game{
-					width : 98%;
-				}
-				.boxer{
-					width : 98%;
 				}
 			}
 		</style>
@@ -163,7 +152,15 @@
 		}
 	
 		let boxer = document.getElementsByClassName("boxer")[0];
-			
+			if(screen.width < screen.height)
+				{
+			boxer.style.width = '98%';
+			boxer.style.height = boxer.clientWidth;
+				}
+			else{
+				boxer.style.height = '98%';
+				boxer.style.width = boxer.clientHeight;
+			}	
 		
 		let boxerCell = new Array(9).fill(1).map(x=>{ 
 			x = document.createElement('div');
@@ -172,9 +169,16 @@
 		})
 		
 		let game = document.getElementsByClassName("game")[0];
+			if(screen.width < screen.height)
+				{
+			game.style.width = '98%';
+			game.style.height = game.clientWidth ;
+				}
 		
-			
-		
+			else{
+				game.style.height = '98%';
+				game.style.width = game.clientHeight;
+			}	
 		
 		let cells = new Array(81).fill(1).map((x,i)=>{ 
 			x = document.createElement('div');
