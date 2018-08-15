@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>सुडोकु</title>
-		<meta http-equiv="Content-Language" content="hi">
+		<meta name="google" content="notranslate">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="manifest" href="manifest.json">
 		<meta name="viewport" content="width=device-width">
@@ -55,7 +55,7 @@
 			.boxerCell{
 				grid-row : auto;
 				grid-column	:auto;
-				border : 3px solid #151515;
+				border : 2px solid #151515;
 				
 			}
 			.answerGrid {
@@ -76,6 +76,7 @@
 				width: 8vh;
 				background: #2eb7108a;
 				margin: 2vw;
+				user-select: none;
 				
 			}
 			.insertCell:active{
@@ -100,7 +101,7 @@
 		
 	</body>
 	<script>
-		let willow = sudoku.generate(40);
+		let willow = sudoku.generate(0);
 		let values = sudoku.board_string_to_grid(willow);
 			values = values.reduce((t,x)=>t.concat(x));
 			values = values.map(x=>x=='.'?" ":x);
