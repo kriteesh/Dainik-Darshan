@@ -100,7 +100,7 @@
 		
 	</body>
 	<script>
-		let willow = sudoku.generate(25);
+		let willow = sudoku.generate(40);
 		let values = sudoku.board_string_to_grid(willow);
 			values = values.reduce((t,x)=>t.concat(x));
 			values = values.map(x=>x=='.'?" ":x);
