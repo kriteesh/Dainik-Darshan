@@ -6,112 +6,74 @@
 				margin:0 ;
 				width : 100%;
 				height : 100%;
-				overflow-x: hidden;
+				overflow : hidden;
 				}
-/*
-			#thefile {
-			  position: fixed;
-			  top: 10px;
-			  left: 10px;
-			  z-index: 100;
+			.container{
+				display: grid;
+				grid-template-rows: 40vh 40vh 20vh;
+				grid-template-columns: 20vw 60vw 20vw;
+				grid-template-areas:
+									'jhoomar tray ghoomar'
+									 'keypad keypad keypad'
+									'footer footer footer';
+				width : 100%;
+				height : 100%;
+				align-items: center;
+				justify-items: center;
 			}
-
-			#canvas {
-			  position: fixed;
-			  left: 0;
-			  top: 0;
-			  width: 100%;
-			  height: 100%;
+			.tray{
+				grid-area: tray;
+				display: flex;
+				width  :100%;
+				height : 20%;
+				flex-direction: row;
+				justify-content: space-around;
 			}
-
-			audio {
-			  position: fixed;
-			  left: 10px;
-			  bottom: 10px;
-			  width: calc(100% - 20px);
+			.letter
+			{
+				border-bottom : 2px solid black;
+				font-size : 10vh;
+				line-height: 0vh;
+				
 			}
-			
-*/
+			.keypad{
+				grid-area: keypad;
+				display: flex;
+				width  :80%;
+				height : 100%;
+				flex-direction: row;
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+			.key{
+				font-size: 5vh;
+				border-radius: 50%;
+				background: grey;
+				margin: 2vw;
+				width: 6vh;
+				text-align: center;
+				
+			}
 		</style>
 	</head>
 	<body>
-		<div id="content">
-<!--
-		  <input type="file" id="thefile" accept="audio/*" />
-		  <canvas id="canvas"></canvas>
-		  <audio id="audio" controls></audio>
--->
+		<div class="container">
+			<div class="tray">
+			</div>
+			<div class="keypad">
+			</div>
 		</div>
 	</body>
 	<script>
+		let word = "what";
+		let tray = document.getElementsByClassName('tray')[0];
 		
+		let letters = new Array(word.length).fill(1).map((x,i)=>{ x = document.createElement('div'); x.className="letter"; x.innerText = word.split('')[i]; tray.appendChild(x);});
 		
+		let keypad = document.getElementsByClassName('keypad')[0];
 		
-//		
-//  window.onload = function() {
-//  
-//  var file = document.getElementById("thefile");
-//  var audio = document.getElementById("audio");
-//  
-//  file.onchange = function() {
-//    var files = this.files;
-//    audio.src = URL.createObjectURL(files[0]);
-//    audio.load();
-//    audio.play();
-//    var context = new AudioContext();
-//    var src = context.createMediaElementSource(audio);
-//    var analyser = context.createAnalyser();
-//
-//    var canvas = document.getElementById("canvas");
-//    canvas.width = window.innerWidth;
-//    canvas.height = window.innerHeight;
-//    var ctx = canvas.getContext("2d");
-//
-//    src.connect(analyser);
-//    analyser.connect(context.destination);
-//
-//    analyser.fftSize = 256;
-//
-//    var bufferLength = analyser.frequencyBinCount;
-//    console.log(bufferLength);
-//
-//    var dataArray = new Uint8Array(bufferLength);
-//
-//    var WIDTH = canvas.width;
-//    var HEIGHT = canvas.height;
-//
-//    var barWidth = (WIDTH / bufferLength) * 2.5;
-//    var barHeight;
-//    var x = 0;
-//
-//    function renderFrame() {
-//      requestAnimationFrame(renderFrame);
-//
-//      x = 0;
-//
-//      analyser.getByteFrequencyData(dataArray);
-//
-//      ctx.fillStyle = "#000";
-//      ctx.fillRect(0, 0, WIDTH, HEIGHT);
-//
-//      for (var i = 0; i < bufferLength-50; i++) {
-//        barHeight = dataArray[i];
-//        
-//        var r = barHeight + (25 * (i/bufferLength));
-//        var g = 250 * (i/bufferLength);
-//        var b = 100;
-//
-//        ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-//		ctx.beginPath();
-//        ctx.arc(WIDTH/2 + (barHeight/2 + 100)*Math.cos(i*2*Math.PI/(bufferLength-50)), HEIGHT/2 - (barHeight/2+100)*Math.sin(i*2*Math.PI/(bufferLength-50)),3, 0, 2*Math.PI);
-//		ctx.fill();
-//      }
-//    }
-//
-//    audio.play();
-//    renderFrame();
-//  };
-//};	
+		let keys = new Array(25).fill(1).map((x,i)=> { x = document.createElement('div'); x.className="key"; x.innerText = "qwertyuiopasdfghjklzxcvbn".split('')[i]; keypad.appendChild(x);})
+		
 		
 	</script>
 	

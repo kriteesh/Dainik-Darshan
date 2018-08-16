@@ -149,7 +149,7 @@
 			values = values.reduce((t,x)=>t.concat(x));
 			values = values.map(x=>x=='.'?" ":x);
 		let solution = sudoku.board_string_to_grid(sudoku.solve(willow));
-	
+			solution = solution.reduce((t,x)=>t.concat(x));
 		let answerGrid = document.getElementsByClassName('answerGrid')[0];
 			answerGrid.style.display = "none";
 			
@@ -179,7 +179,7 @@
 				x.addEventListener('click', function (e) {
 				answerGrid.style.display = "none";
 				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
-				if (window.confirm('क्या आपको नई सुडोकु चाहिए ?'))
+				if (window.confirm('क्या आप हल देखना चाहते हैं ?'))
 				{
 				   check();
 				}
@@ -253,8 +253,8 @@
 		});	
 			
 		let check = () => {
-			console.log('jai');
-		 values.map((x,i)=> { if(x==document.getElementsByClassName('cell')[i].innerText) {document.getElementsByClassName('cell')[i].style.backgroundColor = "#9ec956d4";} else {document.getElementsByClassName('cell')[i].style.backgroundColor = "#ff000080"}});
+	
+		 solution.map((x,i)=> { if(x==document.getElementsByClassName('cell')[i].innerText) {document.getElementsByClassName('cell')[i].style.backgroundColor = "#9ec956d4";} else {document.getElementsByClassName('cell')[i].style.backgroundColor = "#ff000080"}});
 		}
 		
 			
