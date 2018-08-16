@@ -77,6 +77,7 @@
 				width: 8vh;
 				background: #2eb7108a;
 				margin: 2vw;
+				user-select: none;
 				
 			}
 			.insertCell:active{
@@ -170,7 +171,7 @@
 				x.addEventListener('click', function (e) {
 				document.getElementsByClassName('cell')[openCell].innerText = " ";
 				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
-				answerGrid.style.display = "none";
+				answerGrid.style.display = "none";	
 				},false);
 			}
 			else if(i==10) {
@@ -178,6 +179,10 @@
 				x.addEventListener('click', function (e) {
 				answerGrid.style.display = "none";
 				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
+				if (window.confirm('क्या आपको नई सुडोकु चाहिए ?'))
+				{
+				   check();
+				}
 				},false);	
 			}
 			else if(i==11) {
@@ -246,6 +251,12 @@
 			}
 			game.appendChild(x);
 		});	
+			
+		let check = () => {
+			console.log('jai');
+		 values.map((x,i)=> { if(x==document.getElementsByClassName('cell')[i].innerText) {document.getElementsByClassName('cell')[i].style.backgroundColor = "#9ec956d4";} else {document.getElementsByClassName('cell')[i].style.backgroundColor = "#ff000080"}});
+		}
+		
 			
 		var noSleep = new NoSleep();
 
