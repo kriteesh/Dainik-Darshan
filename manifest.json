@@ -4,12 +4,12 @@
   "theme_color": "#2196f3",
   "background_color": "#2196f3",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "landscape",
   "scope": "/",
   "start_url": "sudoku.html",
 	"icons": [
     {
-      "src": "assets/akshara.png",
+      "src": "assets/sudokus.png",
       "type": "image/png",
       "sizes": "192x192"
     }
