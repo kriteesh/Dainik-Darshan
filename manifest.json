@@ -1,8 +1,8 @@
 {
   "name": "सुडोकु खेलो",
   "short_name": "सुडोकु",
-  "theme_color": "#2196f3",
-  "background_color": "#2196f3",
+  "theme_color": "#5959ffb8",
+  "background_color": "#ffffff",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
