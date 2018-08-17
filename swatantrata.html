@@ -1,6 +1,17 @@
 <html>
 	<head>
+		<title>अपावृण</title>
+		<meta name="google" content="notranslate">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="manifest" href="manifest.json">
+		<meta name="viewport" content="width=device-width">
+		<meta name="mobile-web-app-capable" content="yes">
+		<link rel="icon" sizes="192x192" href="assets/sudokus.png">
 		<link href="https://fonts.googleapis.com/css?family=Khand" rel="stylesheet">
+		<link rel="stylesheet" href="css/animate.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		
 		<style>
 			html,body{
 				margin:0 ;
@@ -20,6 +31,7 @@
 				height : 100%;
 				align-items: center;
 				justify-items: center;
+				user-select: none;
 			}
 			.tray{
 				grid-area: tray;
@@ -34,6 +46,8 @@
 				border-bottom : 2px solid black;
 				font-size : 10vh;
 				line-height: 0vh;
+				min-width : 10vw;
+				text-align: center;
 				
 			}
 			.keypad{
@@ -44,6 +58,7 @@
 				flex-direction: row;
 				justify-content: center;
 				flex-wrap: wrap;
+				cursor : pointer;
 			}
 			.key{
 				font-size: 5vh;
@@ -65,15 +80,43 @@
 		</div>
 	</body>
 	<script>
-		let word = "what";
+		let word = "whatt";
+		let letters = word.split('');
 		let tray = document.getElementsByClassName('tray')[0];
-		
-		let letters = new Array(word.length).fill(1).map((x,i)=>{ x = document.createElement('div'); x.className="letter"; x.innerText = word.split('')[i]; tray.appendChild(x);});
+		let counter=0;
+		letters.map((x,i)=>{ x = document.createElement('div'); x.className="letter"; x.innerText = '*'; tray.appendChild(x);});
 		
 		let keypad = document.getElementsByClassName('keypad')[0];
 		
-		let keys = new Array(25).fill(1).map((x,i)=> { x = document.createElement('div'); x.className="key"; x.innerText = "qwertyuiopasdfghjklzxcvbn".split('')[i]; keypad.appendChild(x);})
+		let keys = new Array(25).fill(1).map((x,i)=> {
+			x = document.createElement('div'); 
+			x.className="key"; 
+			x.innerText = "qwertyuiopasdfghjklzxcvbn".split('')[i]; 
+			keypad.appendChild(x);
+			x.addEventListener('click',function(){
+				
+				if(letters.includes(x.innerText))
+				{
+					letters.map((y,i)=>{if(y==x.innerText){document.getElementsByClassName('letter')[i].innerText=y}});
+					let uncover = letters.filter((x,i)=>document.getElementsByClassName('letter')[i].innerText!='*').length;
+					console.log(uncover);
+					if(uncover==letters.length){console.log('done')};
+					x.style.background = "green";
+					x.style.pointerEvents = 'none';
+				}
+			else{
+					counter++;
+					x.style.background = "red";
+					x.style.pointerEvents = 'none';
+					console.log(counter);
+					if(counter>5){console.log('undone')}
+				}
+				
+			},false);
+			
+		})
 		
+	
 		
 	</script>
 	
