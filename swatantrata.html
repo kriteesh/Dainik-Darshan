@@ -6,11 +6,13 @@
 		<link rel="manifest" href="manifest.json">
 		<meta name="viewport" content="width=device-width">
 		<meta name="mobile-web-app-capable" content="yes">
-		<link rel="icon" sizes="192x192" href="assets/sudokus.png">
+		<link rel="icon" sizes="192x192" href="assets/apavrina.png">
 		<link href="https://fonts.googleapis.com/css?family=Khand" rel="stylesheet">
 		<link rel="stylesheet" href="css/animate.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script src="js/akshara.js"></script>
+		<script src="js/sweetAlert.min.js"></script>
+		<script src="ja/gujarati.json"></script>
 		
 		<style>
 			html,body{
@@ -80,8 +82,11 @@
 		</div>
 	</body>
 	<script>
-		let word = "whatt";
-		let letters = word.split('');
+		let words = text.arm.split(' ').filter(x=>(x!='')||(x!=' '));
+		words = words.map((x,i)=>{if(words.indexOf(x)==i) return x; else null;}).filter(x=>x!=null);
+		words = words.filter(x=>akshara('sanskrit')(x).length>3);
+		let word = words[Math.floor(Math.random()*words.length)];
+		let letters = akshara('sanskrit')(word);
 		let tray = document.getElementsByClassName('tray')[0];
 		let counter=0;
 		letters.map((x,i)=>{ x = document.createElement('div'); x.className="letter"; x.innerText = '*'; tray.appendChild(x);});
