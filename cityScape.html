@@ -26,10 +26,10 @@
 			.solar{
 				position : absolute;
 				border-radius:50%;
-				width : 30vw;
-				height : 30vw;
-				left : 35vw;
-				top : 35vh;
+				width : 50vw;
+				height : 50vw;
+				left : 25vw;
+				bottom: 5vh;
 				background: #C33764;  /* fallback for old browsers */
 				background: -webkit-linear-gradient(to top, #1D2671, #C33764);  /* Chrome 10-25, Safari 5.1-6 */
 				background: linear-gradient(to top, #1D2671, #C33764); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -52,7 +52,26 @@
 			.building:hover{
 				opacity : 0.3;
 			}
-			
+/*
+
+			.lights{
+			  position : absolute;
+			  bottom : 0;
+			  height : 2vh;
+			  width : 2px;
+			  background : black;
+				z-index : 4;
+			}
+			.lamps{
+			  position : absolute;
+			  bottom : 2vh;
+			  height : 0.25vw;
+			  width : 0.25vw;
+			  box-shadow: -1px 3px 40px 10px yellow;
+			  background : yellow;
+				z-index :4;
+			}
+*/
 		</style>
 	</head>
 	<body>
@@ -77,36 +96,45 @@
 		let n=40;
 		let temp=0.05;
 		let flag =false;
-//		let cityscape = document.getElementById('cityscape');
-//			cityscape.style.left = "0px";
+	
 		let buildings = new Array(n).fill(1).map((x,i)=>{ 
 			x = document.createElement('div'); 
 			x.className = "building"; 
-			x.style.height = 15*Math.exp(-0.03*(n/2-i)*(n/2-i))+ Math.random()*10 + "vh"; 
+			x.style.height = 20*Math.exp(-0.03*(n/2-i)*(n/2-i))+ Math.random()*5 + "vh"; 
 			x.style.left = Math.floor(Math.nrand()*15) + 50 + "vw";
-			let pit = 100/n - Math.random()*2; 
+			let pit = 100/n - Math.random()*1.5; 
 			x.style.width = pit + "vw";
 			x.style.backgroundSize = pit/3 +"vw " + pit/3 + "vw"; 
 			x.style.zIndex = (i%4);
-//			cityscape.appendChild(x);
 			document.body.appendChild(x); return x;}) ;
 		
-//		let oldpos =0;
-//		window.addEventListener('mousemove',function(event){
-//			let newpos = event.clientX;
-//			if(oldpos > newpos)
-//			{cityscape.style.left = parseInt(cityscape.style.left.replace(/[a-z]/g,"")) + Math.sign(newpos-oldpos) +"px"; }
+//		let lights = new Array(10).fill(1).map((x,i)=>{ 
+//			x = document.createElement('div'); 
+//			x.className = "lights"; 
+//			x.style.left = (10)*i +  "%";
 //			
-//			else if(newpos > oldpos){ cityscape.style.left = parseInt(cityscape.style.left.replace(/[a-z]/g,"")) + Math.sign(newpos-oldpos) +"px";}
-//			
-//			oldpos=newpos;
-//		},false);
+//			y = document.createElement('div');
+//			y.className = "lamps";
+//			y.style.left = (10)*i +  "%";
+//			x.appendChild(y);
+//			document.body.appendChild(x); return x;}) ;
 		
 		
 			let animate = () =>
 		{
 			requestAnimationFrame(animate);
-			buildings.map((x,i)=>{let a=x.style.left; a=parseFloat(a.replace("vw","")); a+=temp*((i%4)*0.5+0.1); if(a>100){a=-parseFloat(x.style.width.replace("vw","")); x.style.height = Math.random()*20 +"vh";} x.style.left = a + "vw";});
+			buildings.map((x,i)=>{
+				let a=x.style.left; 
+				a=parseFloat(a.replace("vw","")); 
+				a+=temp*((i%4)*0.5+0.1); 
+				if(a + parseFloat(x.style.width.replace("vw",""))>100)
+				{
+					a=-parseFloat(x.style.width.replace("vw","")); 
+					x.style.height = Math.random()*20 +"vh";
+				} 
+				x.style.left = a + "vw";
+			});
+			
 			
 		}
 			animate();
