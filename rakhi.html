@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>Bezier</title>
+		<style>
+			html,body{
+				margin : 0;
+				width : 100%;
+				height : 100%;
+				overflow : hidden;
+			}
+		</style>
+	</head>	
+	<body>
+		<canvas></canvas>
+	</body>
+	<script>
+		let canvas = document.querySelector('canvas');
+		let ctx = canvas.getContext('2d');
+		let w = canvas.width = window.innerWidth;
+		let h = canvas.height = window.innerHeight;
+		
+		let background = (color) =>
+		{
+			ctx.fillStyle = color;
+			ctx.fillRect(0,0,w,h);
+		}
+		
+		let circle = (x, y, radius, epoch, cover, divs) => {
+		 
+			let coords = new Array(divs.length).fill(1).map((x,i)=>{
+				let theta = epoch + i*cover/divs ;
+				return {x:x + radius*Math.cos(theta), y : y + radius*Math.sin(theta)};
+			});
+			return coords;
+		}
+		
+		console.log(circle(0,0,w*0.3,0,Math.PI,4));
+	</script>
+</html>
