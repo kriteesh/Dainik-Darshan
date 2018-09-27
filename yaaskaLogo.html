@@ -1,9 +1,46 @@
 <html>
 <head>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5.1/dat.gui.min.js"></script>
+	<style>
+		html,body {
+			width : 100%;
+			height : 100%;
+			margin : 0;
+	
+		}
+		
+		#mirror{
+			position : absolute;
+			top: 0 ;
+			left : 0; 
+			height : 100%;
+			width : 100%;
+			margin : 0 ; 
+		}
+		#png-download { 
+			position: absolute;
+			line-height: 5vh;
+			height : 5vh;	
+			width : 14vw;
+			right : 1vw;
+			padding : 1vw;
+			bottom : 20vh;
+			z-index : 2;
+			background : #151515;
+			cursor : pointer;
+			color : white;
+			text-decoration:  none;
+			text-align: center;
+		}
+		#png-download:hover{
+			opacity : 0.8;
+		}
+	</style>
 </head>
 	<body>
-		<canvas></canvas>
+		<canvas class="main"></canvas>
+		<img src="" id="mirror" onerror="this.style.display='none'"/>
+		<a href="#" id="png-download" download="what.png">Take a Snap</a>
 	</body>
 	<script>
 		let canvas = document.querySelector('canvas');
@@ -15,7 +52,18 @@
 		let scale = 30;
 		let coords = new Array(5).fill(1).map((x,i)=>scale*Math.pow(phi,i));
 		
-		
+		let mirror = document.getElementById('mirror');
+		mirror.addEventListener('contextmenu', function (e) {
+			let dataURL = canvas.toDataURL('image/png');
+			mirror.src = dataURL;
+		});
+
+		let png = document.getElementById('png-download');
+		png.addEventListener('click', function (e) {
+			let dataURL = canvas.toDataURL('image/png');
+			guide = false;
+			png.href = dataURL;
+		});
 		
 		let outerCircle = (radius) =>color=>{
 			ctx.beginPath();
@@ -97,6 +145,7 @@
 		   
 		   	this.foreground = '#151515';
 		    this.background = '#00ffff';
+		    this.guide = true;
         }
 		
 			
@@ -106,6 +155,7 @@
 		gui.add(controls, 'lineWidth',1,40);
 		gui.addColor(controls,'foreground');
 		gui.addColor(controls,'background');
+		gui.add(controls,'guide');
 		
 		let triangleRight = gui.addFolder('triangleRight');
 		triangleRight.add(controls.trx1, 'x',w/2-200,w/2 + 200 );
@@ -124,7 +174,7 @@
 		triangleLeft.add(controls.tlx3, 'y',h/2+200,h/2-200);
 
 		
-
+		let guide = true;
 		
 		let animate = () =>{
 			requestAnimationFrame(animate);
@@ -133,8 +183,7 @@
 			innerCircle(controls.inRadius)(controls.lineWidth)(controls.foreground);
 			rightWhy(controls.trx1,controls.trx2,controls.trx3)(controls.foreground);
 			rightWhy(controls.tlx1,controls.tlx2,controls.tlx3)(controls.foreground);
-
-			guideSquare();
+			if(controls.guide) guideSquare();
 			
 		}
 		animate();
