@@ -146,6 +146,8 @@
 		   	this.foreground = '#151515';
 		    this.background = '#00ffff';
 		    this.guide = true;
+		    this.transparentBack = false;
+		    this.transparentFore = false;
         }
 		
 			
@@ -156,6 +158,8 @@
 		gui.addColor(controls,'foreground');
 		gui.addColor(controls,'background');
 		gui.add(controls,'guide');
+		gui.add(controls,'transparentFore');
+		gui.add(controls,'transparentBack');
 		
 		let triangleRight = gui.addFolder('triangleRight');
 		triangleRight.add(controls.trx1, 'x',w/2-200,w/2 + 200 );
@@ -172,18 +176,26 @@
 		triangleLeft.add(controls.tlx2, 'y',h/2-200,h/2+200);
 		triangleLeft.add(controls.tlx3, 'x',w/2 - 200,w/2 + 200);
 		triangleLeft.add(controls.tlx3, 'y',h/2+200,h/2-200);
+   
 
-		
-		let guide = true;
 		
 		let animate = () =>{
 			requestAnimationFrame(animate);
 			ctx.clearRect(0,0,w,h);
-			outerCircle(controls.outRadius)(controls.background);
-			innerCircle(controls.inRadius)(controls.lineWidth)(controls.foreground);
-			rightWhy(controls.trx1,controls.trx2,controls.trx3)(controls.foreground);
-			rightWhy(controls.tlx1,controls.tlx2,controls.tlx3)(controls.foreground);
+			if(!controls.transparentBack) outerCircle(controls.outRadius)(controls.background);
+			else outerCircle(controls.outRadius)("transparent");
+			
+			if(!controls.transparentFore)
+			{
+				innerCircle(controls.inRadius)(controls.lineWidth)(controls.foreground);
+				rightWhy(controls.trx1,controls.trx2,controls.trx3)(controls.foreground);
+				rightWhy(controls.tlx1,controls.tlx2,controls.tlx3)(controls.foreground);
+			}
+			else innerCircle(controls.inRadius)(controls.lineWidth)("transparent");
+			
+			
 			if(controls.guide) guideSquare();
+			
 			
 		}
 		animate();
