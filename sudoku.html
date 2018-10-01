@@ -11,7 +11,6 @@
 		<link rel="stylesheet" href="css/animate.css">
 		<script src="js/sudoku.js"></script>
 		<script src="js/sweetAlert.min.js"></script>
-		<script src="js/noSleep.js"></script>
 		<style>
 			html,body{
 				margin : 0;
@@ -93,7 +92,15 @@
 				font-family: 'Khand', sans-serif;
 			}
 			.insertCell:active{
-				box-shadow:none;
+				-webkit-transform:scale(0.9); 
+				-moz-transform:scale(0.9); 
+				-ms-transform:scale(0.9); 
+				-o-transform:scale(0.9); 
+				transform:scale(0.9); 
+				-webkit-box-shadow:0px 0px 20px #FFF; 
+				-moz-box-shadow:0px 0px 20px #FFF; 
+				-o-box-shadow:0px 0px 20px #FFF; 
+				box-shadow:0px 0px 20px #FFF; 
 			}
 			
 			.difficulty {
@@ -206,7 +213,7 @@
 					},false);
 				}
 				else if(i==9) {
-					x.innerText ="✖";
+					x.innerText ="✕";
 					x.addEventListener('click', function (e) {
 					document.getElementsByClassName('cell')[openCell].innerText = " ";
 	//				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
@@ -374,25 +381,13 @@
 				}
 			}
 		
-		
-			
-		var noSleep = new NoSleep();
-
-		function enableNoSleep() {
-		  noSleep.enable();
-		  document.removeEventListener('touchstart', enableNoSleep, false);
-		}
-
-		// Enable wake lock.
-		// (must be wrapped in a user input event handler e.g. a mouse or touch handler)
-		document.addEventListener('touchstart', enableNoSleep, false);
 		}
 		
 	</script>
 	<script>
 			if('serviceWorker' in navigator) {
 			  navigator.serviceWorker
-					   .register('/service-worker.js')
+					   .register('service-worker.js')
 					   .then(function() { console.log("Service Worker Registered"); });
 			}
 
