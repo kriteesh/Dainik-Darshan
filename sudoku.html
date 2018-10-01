@@ -123,6 +123,9 @@
 				text-align: center;
 				background: transparent;
 			}
+			.directions{
+				font-size : 3vh;
+			}
 		</style>
 	</head>
 	<body>
@@ -146,203 +149,231 @@
 		
 	</body>
 	<script>
-		let willow;
+		
+		
 		let difficulty = document.getElementsByClassName('difficulty')[0];
 		
 		let setGame = (type) =>
 		{
 			document.getElementsByClassName('container')[0].style.display = 'grid';
-			willow = sudoku.generate(type);
+			
 			difficulty.style.display = "none";
-		
-		
-	
-		let values = sudoku.board_string_to_grid(willow);
-			values = values.reduce((t,x)=>t.concat(x));
-			values = values.map(x=>x=='.'?" ":x);
-		let solution = sudoku.board_string_to_grid(sudoku.solve(willow));
-			solution = solution.reduce((t,x)=>t.concat(x));
-		let answerGrid = document.getElementsByClassName('answerGrid')[0];
-
 			
-		let openCell = -1;
 			
-		let insertCell = new Array(14).fill(1).map((x,i)=>{ 
-			x = document.createElement('div');
-			x.className = 'insertCell';
-			if(i<9)  { 
-				x.innerText = i+1;
-				x.addEventListener('click', function (e) {
-				document.getElementsByClassName('cell')[openCell].innerText = i+1;
-//				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
-
-				},false);
-			}
-			else if(i==9) {
-				x.innerText ="✖";
-				x.addEventListener('click', function (e) {
-				document.getElementsByClassName('cell')[openCell].innerText = " ";
-//				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
-
-				},false);
-			}
-			else if(i==11) {
-				x.innerText = '✆';
-				x.addEventListener('click', function (e) {
-
-//				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
-				swal({
-				  title: "ठहरिये",
-				  text: "क्या आप मूल्याङ्कन करना चाहते है ?",
-				  icon: "warning",
-				  buttons: true,
-				  dangerMode: true,
-				})
-				.then((willDelete) => {
-				  if (willDelete) {
-					  	check(1);
-				  }
-				});
-				},false);	
-			}
-			else if(i==13) {
-				x.innerText = '✈';
-				x.addEventListener('click', function (e) {
-
-//				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
-				
-				swal({
-				  title: "ठहरिये",
-				  text: "क्या आपको नई सुडोकु चाहिए !!",
-				  icon: "warning",
-				  buttons: true,
-				  dangerMode: true,
-				})
-				.then((willDelete) => {
-				  if (willDelete) {
-					  	location.reload();
-				  }
-				});
-				},false);	
-			}
-			else if(i==12) {
-				x.innerText = '✔';
-				x.addEventListener('click', function (e) {
-
-//				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
-				swal({
-				  title: "ठहरिये",
-				  text: "क्या आप हल देखना चाहते है ?",
-				  icon: "warning",
-				  buttons: true,
-				  dangerMode: true,
-				})
-				.then((willDelete) => {
-				  if (willDelete) {
-					  	check(2);
-				  }
-				});
-				},false);	
-			}
-			
-			else if(i==10) {
-				x.innerText = '♻';
-				x.addEventListener('click', function (e) {
-
-//				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
-				swal({
-				  title: "ठहरिये",
-				  text: "क्या आप सब हटाना चाहते है?",
-				  icon: "warning",
-				  buttons: true,
-				  dangerMode: true,
-				})
-				.then((willDelete) => {
-				  if (willDelete) {
-					  	check(3);
-				  }
-				});
-				},false);	
-			}
-			
-			answerGrid.appendChild(x);
-		});
-		
-		let insertion = (x) => {
-			
-
-			if(openCell!=-1) {document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";}
-			
-			openCell = x;
-			document.getElementsByClassName('cell')[openCell].style.backgroundColor = "#ead620c4";	
-		}
-	
-		let boxer = document.getElementsByClassName("boxer")[0];
-			if(screen.width < screen.height)
-				{
-			boxer.style.width = '98%';
-			boxer.style.height = boxer.clientWidth;
+			var extend = function (obj1,obj2) {
+				var extended = {};
+				for (var prop1 in obj1) {
+					if (obj1.hasOwnProperty(prop1)) {
+						extended[prop1] = obj1[prop1];
+					}
 				}
-			else{
-				boxer.style.height = '98%';
-				boxer.style.width = boxer.clientHeight;
-			}	
-		
-		let boxerCell = new Array(9).fill(1).map(x=>{ 
-			x = document.createElement('div');
-			x.className = 'boxerCell';
-			boxer.appendChild(x);
-		})
-		
-		let game = document.getElementsByClassName("game")[0];
-			if(screen.width < screen.height)
-				{
-			game.style.width = '98%';
-			game.style.height = game.clientWidth ;
+				for (var prop2 in obj2) {
+					if (obj2.hasOwnProperty(prop2)) {
+					
+						extended[prop2] = obj2[prop2];
+					}
 				}
+				return extended;
+			};
 		
-			else{
-				game.style.height = '98%';
-				game.style.width = game.clientHeight;
-			}	
+			
+			let puzzle = sudoku.generate(type);
+			let solution = sudoku.solve(puzzle); 
+			
+			let emptied = {A1:" ",A2:" ",A3:" ",A4:" ",A5:" ",A6:" ",A7:" ",A8:" ",A9:" ",B1:" ",B2:" ",B3:" ",B4:" ",B5:" ",B6:" ",B7:" ",B8:" ",B9:" ",C1:" ",C2:" ",C3:" ",C4:" ",C5:" ",C6:" ",C7:" ",C8:" ",C9:" ",D1:" ",D2:" ",D3:" ",D4:" ",D5:" ",D6:" ",D7:" ",D8:" ",D9:" ",E1:" ",E2:" ",E3:" ",E4:" ",E5:" ",E6:" ",E7:" ",E8:" ",E9:" ",F1:" ",F2:" ",F3:" ",F4:" ",F5:" ",F6:" ",F7:" ",F8:" ",F9:" ",G1:" ",G2:" ",G3:" ",G4:" ",G5:" ",G6:" ",G7:" ",G8:" ",G9:" ",H1:" ",H2:" ",H3:" ",H4:" ",H5:" ",H6:" ",H7:" ",H8:" ",H9:" ",I1:" ",I2:" ",I3:" ",I4:" ",I5:" ",I6:" ",I7:" ",I8:" ",I9:" "}
 		
-		let cells = new Array(81).fill(1).map((x,i)=>{ 
-			x = document.createElement('div');
-			x.className = 'cell';
-			x.classList.add('bounceIn');
-			x.innerText = values[i];
-			if(values[i]==" "){
-				x.addEventListener('click', function (e) {
-				insertion(i);
-				},false);
-				x.style.color = "#006eff";
-				x.style.cursor = "pointer";
+
+			puzzle = extend(emptied,puzzle);
+			let values = Object.values(puzzle);
+			solution = Object.values(solution);
+           
+	
+			
+			let answerGrid = document.getElementsByClassName('answerGrid')[0];
+
+
+			let openCell = -1;
+
+			let insertCell = new Array(14).fill(1).map((x,i)=>{ 
+				x = document.createElement('div');
+				x.className = 'insertCell';
+				if(i<9)  { 
+					x.innerText = i+1;
+					x.addEventListener('click', function (e) {
+					document.getElementsByClassName('cell')[openCell].innerText = i+1;
+	//				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
+
+					},false);
+				}
+				else if(i==9) {
+					x.innerText ="✖";
+					x.addEventListener('click', function (e) {
+					document.getElementsByClassName('cell')[openCell].innerText = " ";
+	//				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
+
+					},false);
+				}
+				else if(i==11) {
+					x.innerText = 'चैक';
+					x.className = " insertCell directions";
+					x.addEventListener('click', function (e) {
+
+	//				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
+					swal({
+					  title: "ठहरिये",
+					  text: "क्या आप मूल्याङ्कन करना चाहते है ?",
+					  icon: "warning",
+					  buttons: true,
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					  if (willDelete) {
+							check(1);
+					  }
+					});
+					},false);	
+				}
+				else if(i==13) {
+					x.innerText = '⇒';
+					x.addEventListener('click', function (e) {
+
+	//				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
+
+					swal({
+					  title: "ठहरिये",
+					  text: "क्या आपको नई सुडोकु चाहिए !!",
+					  icon: "warning",
+					  buttons: true,
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					  if (willDelete) {
+							location.reload();
+					  }
+					});
+					},false);	
+				}
+				else if(i==12) {
+					x.innerText = 'हल';
+					x.className = " insertCell directions";
+					x.addEventListener('click', function (e) {
+
+	//				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
+					swal({
+					  title: "ठहरिये",
+					  text: "क्या आप हल देखना चाहते है ?",
+					  icon: "warning",
+					  buttons: true,
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					  if (willDelete) {
+							check(2);
+					  }
+					});
+					},false);	
+				}
+
+				else if(i==10) {
+					x.innerText = 'पुनः';
+					x.className = " insertCell directions";
+					x.addEventListener('click', function (e) {
+
+	//				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";
+					swal({
+					  title: "ठहरिये",
+					  text: "क्या आप सब हटाना चाहते है?",
+					  icon: "warning",
+					  buttons: true,
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					  if (willDelete) {
+							check(3);
+					  }
+					});
+					},false);	
+				}
+
+				answerGrid.appendChild(x);
+			});
+
+			let insertion = (x) => {
+
+
+				if(openCell!=-1) {document.getElementsByClassName('cell')[openCell].style.backgroundColor = "transparent";}
+
+				openCell = x;
+				document.getElementsByClassName('cell')[openCell].style.backgroundColor = "#ead620c4";	
 			}
-			
-			game.appendChild(x);
-		});	
-			
-		let check = (type) => {
-		if(type==1){
-		 values.map((x,i)=> { if(x==' '){
-								 if(solution[i]==document.getElementsByClassName('cell')[i].innerText) {document.getElementsByClassName('cell')[i].style.backgroundColor = "#9ec956d4";} 
-							else {document.getElementsByClassName('cell')[i].style.backgroundColor = "#ff000080"}
-							}
-		})
-		}
-		else if(type==2) {
-			solution.map((x,i)=> {
-				document.getElementsByClassName('cell')[i].style.background = 'transparent';
-				document.getElementsByClassName('cell')[i].innerText = x;})
-			}
-			
-		else {
-			values.map((x,i)=> {
-				document.getElementsByClassName('cell')[i].innerText = x;
-				document.getElementsByClassName('cell')[i].style.background = 'transparent';
+
+			let boxer = document.getElementsByClassName("boxer")[0];
+				if(screen.width < screen.height)
+					{
+				boxer.style.width = '98%';
+				boxer.style.height = boxer.clientWidth;
+					}
+				else{
+					boxer.style.height = '98%';
+					boxer.style.width = boxer.clientHeight;
+				}	
+
+			let boxerCell = new Array(9).fill(1).map(x=>{ 
+				x = document.createElement('div');
+				x.className = 'boxerCell';
+				boxer.appendChild(x);
+			})
+
+			let game = document.getElementsByClassName("game")[0];
+				if(screen.width < screen.height)
+					{
+				game.style.width = '98%';
+				game.style.height = game.clientWidth ;
+					}
+
+				else{
+					game.style.height = '98%';
+					game.style.width = game.clientHeight;
+				}	
+
+			let cells = new Array(81).fill(1).map((x,i)=>{ 
+				x = document.createElement('div');
+				x.className = 'cell';
+				x.classList.add('bounceIn');
+				x.innerText = values[i];
+				if(values[i]==" "){
+					x.addEventListener('click', function (e) {
+					insertion(i);
+					},false);
+					x.style.color = "#006eff";
+					x.style.cursor = "pointer";
+				}
+
+				game.appendChild(x);
+			});	
+
+			let check = (type) => {
+			if(type==1){
+			 values.map((x,i)=> { if(x==' '){
+									 if(solution[i]==document.getElementsByClassName('cell')[i].innerText) {document.getElementsByClassName('cell')[i].style.backgroundColor = "#9ec956d4";} 
+								else {document.getElementsByClassName('cell')[i].style.backgroundColor = "#ff000080"}
+								}
 			})
 			}
-		}
+			else if(type==2) {
+				solution.map((x,i)=> {
+					document.getElementsByClassName('cell')[i].style.background = 'transparent';
+					document.getElementsByClassName('cell')[i].innerText = x;})
+				}
+
+			else {
+				values.map((x,i)=> {
+					document.getElementsByClassName('cell')[i].innerText = x;
+					document.getElementsByClassName('cell')[i].style.background = 'transparent';
+				})
+				}
+			}
+		
 		
 			
 		var noSleep = new NoSleep();
@@ -356,17 +387,15 @@
 		// (must be wrapped in a user input event handler e.g. a mouse or touch handler)
 		document.addEventListener('touchstart', enableNoSleep, false);
 		}
+		
 	</script>
 	<script>
-  	if ('serviceWorker' in navigator) {
-    	console.log("Will the service worker register?");
-    	navigator.serviceWorker.register('service-worker.js')
-      .	then(function(reg){
-			console.log("Yes, it did.");
-      	}).catch(function(err) {
-        	console.log("No it didn't. This happened: ", err)
-      	});
-  	}
+			if('serviceWorker' in navigator) {
+			  navigator.serviceWorker
+					   .register('/service-worker.js')
+					   .then(function() { console.log("Service Worker Registered"); });
+			}
+
 </script>
 	
 </html>
