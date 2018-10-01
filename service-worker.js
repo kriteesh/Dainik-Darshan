@@ -1,34 +1,31 @@
-var CACHE_NAME = 'my-site-cache-v1';
-var urlsToCache = [
-  '/',
-  '/css/animate.css',
-  '/js/sudoku.js',
-  '/js/sweetAlert.min.js',
-  ''
-];
-
-self.addEventListener('install', function(event) {
-  // Perform install steps
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(function(cache) {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
+const version = "0.6.11";
+const cacheName = `sudoku-${version}`;
+self.addEventListener('install', e => {
+  const timeStamp = Date.now();
+  e.waitUntil(
+    caches.open(cacheName).then(cache => {
+      return cache.addAll([
+        `/`,
+        `/sudoku.html`,
+        `/js/sudoku.js`,
+        `/js/sweetAlert.min.js`,
+        `/css/animate.css`
+      ])
+          .then(() => self.skipWaiting());
+    })
   );
+});
 
+self.addEventListener('activate', event => {
+  event.waitUntil(self.clients.claim());
+});
 
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      }
-    )
-  )
-}
-)
+    caches.open(cacheName)
+      .then(cache => cache.match(event.request, {ignoreSearch: true}))
+      .then(response => {
+      return response || fetch(event.request);
+    })
+  );
+});
