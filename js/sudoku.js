@@ -562,11 +562,11 @@ var sudoku = (function() {
 
 	function squareCount(difficulty) {
 		if (difficulty == 'easy') {
-			return 35;
+			return 45;
 		} else if (difficulty == 'medium') {
-			return 28;
+			return 35;
 		}
-		return 20;
+		return 25;
 	}
 
 	function generate(difficulty) {
