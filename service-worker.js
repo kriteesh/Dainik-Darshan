@@ -1,30 +1,37 @@
-const version = "0.6.11";
-const cacheName = `sudoku-${version}`;
-self.addEventListener('install', e => {
-  const timeStamp = Date.now();
-  e.waitUntil(
-    caches.open(cacheName).then(cache => {
-      return cache.addAll([
-        `/`,
-        `/sudoku.html`,
-        `/js/sudoku.js`,
-        `/js/sweetAlert.min.js`,
-        `/css/animate.css`
-      ])
-          .then(() => self.skipWaiting());
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      return cache.addAll(
+        [
+          '/js/sudoku.js',
+          '/js/sweetAlert.min.js',
+          '/css/animate.css',
+          '/sudoku.html',
+        ]
+      );
     })
   );
 });
 
-self.addEventListener('activate', event => {
-  event.waitUntil(self.clients.claim());
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.filter(function(cacheName) {
+          // Return true if you want to remove this cache,
+          // but remember that caches are shared across
+          // the whole origin
+        }).map(function(cacheName) {
+          return caches.delete(cacheName);
+        })
+      );
+    })
+  );
 });
 
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', function(event) {
   event.respondWith(
-    caches.open(cacheName)
-      .then(cache => cache.match(event.request, {ignoreSearch: true}))
-      .then(response => {
+    caches.match(event.request).then(function(response) {
       return response || fetch(event.request);
     })
   );
