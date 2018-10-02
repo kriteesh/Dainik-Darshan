@@ -4,7 +4,8 @@ let cacheFiles = [
   '/js/sweetAlert.min.js',
   '/css/animate.css',
   '/manifest.json',
-  '/sudoku.html'
+  '/sudoku.html',
+  'https://fonts.googleapis.com/css?family=Khand'
 
 ]
 
@@ -12,7 +13,6 @@ let cacheFiles = [
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(cacheName).then(function(cache) {
-      console.log(cacheName);
       return cache.addAll(cacheFiles) ;
     })
   );
