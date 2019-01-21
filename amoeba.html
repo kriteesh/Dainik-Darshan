@@ -4,7 +4,7 @@
             @import url('https://fonts.googleapis.com/css?family=Righteous');
 
                 :root{ 
-                    --size : 100px;
+                    --size : 20vh;
                     --opColor : #FFEB3B;
                     --numColor : #673ab7;
                     --opNum : 4; 
@@ -71,6 +71,7 @@
                 .num:nth-child(3){
                 transform :  translate(calc(var(--size)*3));
                 }
+
         </style>
     </head>
     <body>
@@ -89,6 +90,7 @@
         </div>
     </body>
     <script>
+        screen.orientation.lock('landscape');
         let game = { 
             num : 2,
             opList : ['+','-','÷','×'],
