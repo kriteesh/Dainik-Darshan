@@ -1,21 +1,138 @@
 <html>
     <head>
         <style>
+            @import url('https://fonts.googleapis.com/css?family=Graduate');
+
+                :root{ 
+                --size : 100px;
+                --opColor : #FFEB3B;
+                --numColor : #673ab7;
+                --opNum : 4; 
+                }
+
+                html,body{
+                margin : 0; 
+                background : #131313;
+                }
+
+                .op{
+                position : absolute;
+                width : var(--size);
+                height : var(--size);
+                top : 50%;
+                left : 50%;
+                z-index : 1;
+                margin-left : calc(0px - var(--size)/2);
+                margin-top : calc(0px - var(--size)/2);
+                border-radius : 50%;
+                background-color : var(--opColor);   
+                color : #131313;
+                font-family : "Graduate",cursive;
+                text-align : center;
+                font-size : 8vh;
+                line-height : var(--size);
+                border : calc(var(--size)/10) solid #ffc107bf;
+                user-select : none;
+                cursor : pointer;
+                }
+
+                .op:nth-child(1){
+                transform : rotate(-45deg) translate(calc(var(--size)*2)) rotate(45deg);
+                }
+
+                .op:nth-child(2){
+                transform : rotate(-135deg) translate(calc(var(--size)*2)) rotate(135deg);
+                }
+
+                .op:nth-child(3){
+                transform : rotate(45deg) translate(calc(var(--size)*2)) rotate(-45deg);
+                }
+
+                .op:nth-child(4){
+                transform : rotate(135deg) translate(calc(var(--size)*2)) rotate(-135deg);
+                }
+
+
+
+
+                .num{
+                position : absolute;
+                width : var(--size);
+                height : var(--size);
+                top : 50%;
+                left : 50%;
+                border-radius : 50%;
+                margin-left : calc(0px - var(--size)/2);
+                margin-top : calc(0px - var(--size)/2);
+                border : 2px dotted var(--numColor);
+                color : white;
+                font-family : "Graduate",cursive;
+                text-align : center;
+                font-size : 8vh;
+                line-height : var(--size);  
+                }
+
+                .num:nth-child(1){
+                transform :  translate(calc(0px - var(--size)*3));
+                }
+
+                .num:nth-child(3){
+                transform :  translate(calc(var(--size)*3));
+                }
         </style>
     </head>
     <body>
-        <canvas></canvas>
+            <div class="container">
+                    <div class="ops">
+                      <div class="op"></div>
+                      <div class="op"></div>
+                      <div class="op"></div>
+                      <div class="op"></div>
+                    </div>
+                    <div class="nums">
+                      <div class="num"></div>
+                      <div class="num"></div>
+                      <div class="num"></div>
+                    </div>
+                  </div>
     </body>
     <script>
-        let canvas = document.querySelector('canvas');
-		let ctx = canvas.getContext('2d');
-		let w = canvas.width = window.innerWidth;
-        let h = canvas.height = window.innerHeight;
-        
-        let drawContour = () => {
-            ctx.beginPath();
-            ctx.moveTo()
+        let game = { 
+            num : 2,
+            opList : ['+','-','÷','×'],
+            numList : {initial : 4, current : 4, final : 95},
+            messages : ["Nooo!, Press the Yellow Buttons"]
         }
-		
+
+        let display = function(){
+            for(let i=0; i<=game.opList.length-1; i++){
+                document.getElementsByClassName("op")[i].innerHTML = game.opList[i] + game.num;
+                }   
+                document.getElementsByClassName("num")[0].innerHTML = game.numList.initial;
+                document.getElementsByClassName("num")[1].innerHTML = game.numList.current;
+                document.getElementsByClassName("num")[2].innerHTML = game.numList.final;
+            }
+
+        display();
+            
+        
+            for(let i=0; i< game.opList.length ; i++){
+              document.getElementsByClassName("op")[i].onclick = function(){
+                game.numList.current = operation(game.numList.current,game.num,game.opList[i]);
+                document.getElementsByClassName("num")[1].innerHTML = game.numList.current;
+            }
+            }
+
+            let operation = (val1,val2,op) => {
+            
+            if(op == "+") return (val1 + val2);
+            else if(op == "-") return (val1 - val2);
+            else if(op == "÷") return Math.round(val1/val2);
+            else if(op == "×") return (val1*val2);
+            
+    
+            }
+
+
     </script>
 </html>
