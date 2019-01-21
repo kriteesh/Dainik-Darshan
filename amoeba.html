@@ -1,39 +1,42 @@
 <html>
     <head>
         <style>
-            @import url('https://fonts.googleapis.com/css?family=Graduate');
+            @import url('https://fonts.googleapis.com/css?family=Righteous');
 
                 :root{ 
-                --size : 100px;
-                --opColor : #FFEB3B;
-                --numColor : #673ab7;
-                --opNum : 4; 
+                    --size : 100px;
+                    --opColor : #FFEB3B;
+                    --numColor : #673ab7;
+                    --opNum : 4; 
                 }
 
                 html,body{
-                margin : 0; 
-                background : #131313;
+                    margin : 0; 
+                    background : #131313;
+                    font-family: "Righteous",cursive;
+                }
+
+                .common{
+                    position : absolute;
+                    width : var(--size);
+                    height : var(--size);
+                    top : 50%;
+                    left : 50%;
+                    margin-left : calc(0px - var(--size)/2);
+                    margin-top : calc(0px - var(--size)/2);
+                    border-radius : 50%;
+                    text-align : center;
+                    font-size : 8vh;
+                    line-height : var(--size);
+                    user-select : none;
                 }
 
                 .op{
-                position : absolute;
-                width : var(--size);
-                height : var(--size);
-                top : 50%;
-                left : 50%;
-                z-index : 1;
-                margin-left : calc(0px - var(--size)/2);
-                margin-top : calc(0px - var(--size)/2);
-                border-radius : 50%;
-                background-color : var(--opColor);   
-                color : #131313;
-                font-family : "Graduate",cursive;
-                text-align : center;
-                font-size : 8vh;
-                line-height : var(--size);
-                border : calc(var(--size)/10) solid #ffc107bf;
-                user-select : none;
-                cursor : pointer;
+              
+                    background-color : var(--opColor);   
+                    color : #131313;
+                    border : calc(var(--size)/10) solid #ffc107bf;
+                    cursor : pointer;
                 }
 
                 .op:nth-child(1){
@@ -56,20 +59,9 @@
 
 
                 .num{
-                position : absolute;
-                width : var(--size);
-                height : var(--size);
-                top : 50%;
-                left : 50%;
-                border-radius : 50%;
-                margin-left : calc(0px - var(--size)/2);
-                margin-top : calc(0px - var(--size)/2);
+              
                 border : 2px dotted var(--numColor);
                 color : white;
-                font-family : "Graduate",cursive;
-                text-align : center;
-                font-size : 8vh;
-                line-height : var(--size);  
                 }
 
                 .num:nth-child(1){
@@ -82,19 +74,19 @@
         </style>
     </head>
     <body>
-            <div class="container">
-                    <div class="ops">
-                      <div class="op"></div>
-                      <div class="op"></div>
-                      <div class="op"></div>
-                      <div class="op"></div>
-                    </div>
-                    <div class="nums">
-                      <div class="num"></div>
-                      <div class="num"></div>
-                      <div class="num"></div>
-                    </div>
-                  </div>
+        <div class="container">
+            <div class="ops">
+                <div class="op common"></div>
+                <div class="op common"></div>
+                <div class="op common"></div>
+                <div class="op common"></div>
+            </div>
+            <div class="nums">
+                <div class="num common"></div>
+                <div class="num common"></div>
+                <div class="num common"></div>
+            </div>        
+        </div>
     </body>
     <script>
         let game = { 
@@ -107,31 +99,38 @@
         let display = function(){
             for(let i=0; i<=game.opList.length-1; i++){
                 document.getElementsByClassName("op")[i].innerHTML = game.opList[i] + game.num;
-                }   
-                document.getElementsByClassName("num")[0].innerHTML = game.numList.initial;
-                document.getElementsByClassName("num")[1].innerHTML = game.numList.current;
-                document.getElementsByClassName("num")[2].innerHTML = game.numList.final;
-            }
+            }   
+            document.getElementsByClassName("num")[0].innerHTML = game.numList.initial;
+            document.getElementsByClassName("num")[1].innerHTML = game.numList.current;
+            document.getElementsByClassName("num")[2].innerHTML = game.numList.final;
+        }
 
         display();
             
         
-            for(let i=0; i< game.opList.length ; i++){
-              document.getElementsByClassName("op")[i].onclick = function(){
+        for(let i=0; i< game.opList.length ; i++){
+            document.getElementsByClassName("op")[i].onclick = function(){
                 game.numList.current = operation(game.numList.current,game.num,game.opList[i]);
                 document.getElementsByClassName("num")[1].innerHTML = game.numList.current;
+                check();
             }
-            }
+        }         
 
-            let operation = (val1,val2,op) => {
-            
-            if(op == "+") return (val1 + val2);
-            else if(op == "-") return (val1 - val2);
-            else if(op == "÷") return Math.round(val1/val2);
-            else if(op == "×") return (val1*val2);
-            
-    
+        let operation = (val1,val2,op) => {   
+                if(op == "+") return (val1 + val2);
+                else if(op == "-") return (val1 - val2);
+                else if(op == "÷") return Math.round(val1/val2);
+                else if(op == "×") return (val1*val2);
+        }
+        
+        let check = () =>{
+            if(game.numList.current==game.numList.final) {
+                game.numList = {initial : 6, current : 7, final : 34};
+                display();
             }
+        }
+
+
 
 
     </script>
