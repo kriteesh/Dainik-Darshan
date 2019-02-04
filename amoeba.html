@@ -105,6 +105,7 @@
                 height : var(--size);
                 border-radius : 50%;
                 border : 2px dotted var(--numColor);
+                text-shadow: 6px 1px 4px indigo;
                 color : white;
                 text-align : center;
                 }
@@ -113,6 +114,25 @@
                     justify-self: end;
                 }
                 
+                .num:nth-child(2):after{
+                    position : absolute;
+                    content : "";
+                    height : calc(var(--size)*0.05);
+                    width : calc(var(--size)*0.05);
+                    top : 50%;
+                    left : 50%;
+                    background : white;
+                    box-shadow : 0 0 20px white;
+                    transform : translate(calc(var(--size)*4));
+                    animation : rota 10s linear infinite;
+                    
+                }
+
+                @keyframes rota{
+                    from{transform : rotate(0deg) translate(calc(var(--size)*4))}
+                    to{transform : rotate(360deg) translate(calc(var(--size)*4))}
+                }
+
                 .num:nth-child(2){
                 min-width : var(--size);
                 min-height: var(--size);
@@ -128,7 +148,7 @@
                     width : calc(var(--size)*6); 
                     height : calc(var(--size)*0.75); 
                     margin-left : calc(0px - var(--size)*3);
-                    background: linear-gradient(120deg, indigo 40%, #9c27b0 40.5%,#9c27b0b5 49.5%, #e91e638f 50%);
+                    background: radial-gradient(circle,transparent,indigo);
                     color: #d6b75b;
                     line-height :  calc(var(--size)*0.75);
                     font-size : 5vh;
@@ -141,7 +161,8 @@
                     width : calc(var(--size)*2); 
                     height : var(--size);
                     margin-top  : calc(0px - var(--size)/2);
-                    background: linear-gradient(120deg, indigo 40%, #9c27b0 40.5%,#9c27b0b5 49.5%, #e91e638f 50%);
+                    box-shadow: 0 0 40px indigo,0 0 40px indigo inset;
+                    border: 2px solid white;
                     color: #d6b75b;
                     line-height :  var(--size);
                     font-size : 4.5vh;
@@ -151,13 +172,14 @@
                 .score{
                     left : 0; 
                     border-radius : 0 var(--size) var(--size) 0;
+                    border-left: 0;
 
                 }
 
                 .level{
                     right : 0;
                     border-radius : var(--size) 0 0 var(--size);
-                    
+                    border-right : 0;
                 }
                 
                 .steps{
