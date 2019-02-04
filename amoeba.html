@@ -1,18 +1,28 @@
 <html>
     <head>
+        <title>Matargashti</title>
+		<!-- <meta http-equiv="Content-Language" content="hi"> -->
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="manifest" href="matargashti.json">
+		<meta name="viewport" content="width=device-width">
+		<meta name="mobile-web-app-capable" content="yes">
+		<link rel="icon" sizes="192x192" href="assets/matargashti.png">
         <style>
             @import url('https://fonts.googleapis.com/css?family=Righteous');
 
                 :root{ 
-                    --size : 20vh;
+                    --size : 12vmin;
                     --opColor : #FFEB3B;
+                    --opColorShade : #9ec956;
                     --numColor : #673ab7;
                     --opNum : 4; 
+                    --midWidth : 70vmax;
+                    --fontSize : 6vh;
                 }
 
                 html,body{
                     margin : 0; 
-                    background : #131313;
+                    background :linear-gradient(45deg,indigo -52%,#131313 50%),linear-gradient(135deg,indigo 52%,#131313 50%);
                     font-family: "Righteous",cursive;
                 }
 
@@ -26,52 +36,174 @@
                     margin-top : calc(0px - var(--size)/2);
                     border-radius : 50%;
                     text-align : center;
-                    font-size : 8vh;
+                    font-size : var(--fontSize);
                     line-height : var(--size);
                     user-select : none;
                 }
 
                 .op{
               
-                    background-color : var(--opColor);   
+                    background : linear-gradient(45deg,var(--opColor) 50%,var(--opColorShade) 50.1%);   
                     color : #131313;
-                    border : calc(var(--size)/10) solid #ffc107bf;
+                    border : calc(var(--size)/10) solid #ffc107;
                     cursor : pointer;
+                    -webkit-tap-highlight-color: rgba(0,0,0,0);
+                    -webkit-tap-highlight-color: transparent;
+                    transition : width 100ms, height 100ms,line-height 100ms;
+                    pointer-events: auto;
+                }
+
+                .op:hover{
+                    width : calc(var(--size)*1.1);
+                    height : calc(var(--size)*1.1);
+                    line-height : calc(var(--size)*1.1);
                 }
 
                 .op:nth-child(1){
-                transform : rotate(-45deg) translate(calc(var(--size)*2)) rotate(45deg);
+                transform : rotate(-45deg) translate(calc(var(--size)*2.5)) rotate(45deg);
                 }
 
                 .op:nth-child(2){
-                transform : rotate(-135deg) translate(calc(var(--size)*2)) rotate(135deg);
+                transform : rotate(-135deg) translate(calc(var(--size)*2.5)) rotate(135deg);
                 }
 
                 .op:nth-child(3){
-                transform : rotate(45deg) translate(calc(var(--size)*2)) rotate(-45deg);
+                transform : rotate(45deg) translate(calc(var(--size)*2.5)) rotate(-45deg);
                 }
 
                 .op:nth-child(4){
-                transform : rotate(135deg) translate(calc(var(--size)*2)) rotate(-135deg);
+                transform : rotate(135deg) translate(calc(var(--size)*2.5)) rotate(-135deg);
                 }
 
-
+                .nums{
+                    display :flex;
+                    justify-content: space-between;
+                    position : absolute;
+                    width : var(--midWidth);
+                    height : calc(var(--size)*1.2);
+                    top : 50%;
+                    left : 50%;
+                    margin-left : calc(0px - var(--midWidth)/2);
+                    margin-top : calc(0px - var(--size)*0.6);
+                    text-align : center;
+                    font-size : var(--fontSize);
+                    line-height : var(--size);
+                    user-select : none;
+                }
 
 
                 .num{
-              
+                width : var(--size);
+                height : var(--size);
+                border-radius : 50%;
                 border : 2px dotted var(--numColor);
                 color : white;
+                text-align : center;
                 }
 
-                .num:nth-child(1){
-                transform :  translate(calc(0px - var(--size)*3));
+                .num:nth-child(1),.num:nth-child(3){
+                    justify-self: end;
+                }
+                
+                .num:nth-child(2){
+                min-width : var(--size);
+                min-height: var(--size);
+                width : auto;
+                padding : 1vmin;
+                border-radius : 0%;
                 }
 
-                .num:nth-child(3){
-                transform :  translate(calc(var(--size)*3));
+
+                .verts{
+                    position : absolute;
+                    top : 50%;
+                    left : 50%;
+                    width : calc(var(--size)*6); 
+                    height : calc(var(--size)*0.75); 
+                    margin-left : calc(0px - var(--size)*3);
+                    margin-top  : calc(0px - var(--size)/2);
+                    border-radius : var(--size) var(--size) 0 0;
+                    background: linear-gradient(120deg, indigo 40%, #9c27b0 40.5%,#9c27b0b5 49.5%, #e91e638f 50%);
+                    color: #d6b75b;
+                    line-height :  calc(var(--size)*0.75);
+                    font-size : 5vh;
+                    text-align: center;
                 }
 
+                .horz{
+                    position : absolute;
+                    top : 50%;
+                    left : 50%;
+                    width : calc(var(--size)*2); 
+                    height : var(--size); 
+                    margin-left : calc(0px - var(--size));
+                    margin-top  : calc(0px - var(--size)/2);
+                    border-radius : var(--size) 0 0 var(--size);
+                    background: linear-gradient(120deg, indigo 40%, #9c27b0 40.5%,#9c27b0b5 49.5%, #e91e638f 50%);
+                    color: #d6b75b;
+                    line-height :  var(--size);
+                    font-size : 4.5vh;
+                    text-align: center;
+                }
+
+                .score{
+                    transform : translate(calc(-50vmax + var(--size)));
+                    border-radius : 0 var(--size) var(--size) 0;
+
+                }
+
+                .level{
+                    transform : translate(calc(50vmax - var(--size)));
+                }
+                
+                .steps{
+                    transform : translateY(calc(50vmin - var(--size)*1/3));
+                    
+                }
+
+                .head{
+                    transform : translateY(calc(-50vmin + var(--size)*0.6));
+                    border-radius : 0 0 var(--size) var(--size);
+
+                }
+                
+
+                .added{
+                  animation : fadeIn 500ms linear 1;
+                }
+                @-webkit-keyframes fadeIn {
+                    from {
+                        opacity: 0;
+                    }
+
+                    to {
+                        opacity: 1;
+                    }
+                    }
+
+            
+
+                .disabled{
+                    pointer-events: none;
+                    background : linear-gradient(45deg,grey 50%,#cccccc 50.1%);
+                    border : calc(var(--size)/10) solid whitesmoke;
+                }
+
+                .refresh{
+                    animation : flash 1000ms linear 1;
+                }
+                @keyframes flash {
+                    from,
+                    50%,
+                    to {
+                        opacity: 1;
+                    }
+
+                    25%,
+                    75% {
+                        opacity: 0;
+                    }
+                    }
         </style>
     </head>
     <body>
@@ -83,57 +215,118 @@
                 <div class="op common"></div>
             </div>
             <div class="nums">
-                <div class="num common"></div>
-                <div class="num common"></div>
-                <div class="num common"></div>
-            </div>        
+                <div class="num"></div>
+                <div class="num"></div>
+                <div class="num"></div>
+            </div>  
+            <div class="board">
+                <div class="verts steps common"></div>
+                <div class="horz level common"></div>
+                <div class="horz score common"></div>
+                <div class="verts head common"></div>
+            </div>      
         </div>
     </body>
     <script>
-        screen.orientation.lock('landscape');
         let game = { 
+            levelNum :1,
             num : 2,
             opList : ['+','-','÷','×'],
-            numList : {initial : 4, current : 4, final : 95},
+            numList : {initial : 4, current : 4, final : 32},
+            stepCount : 0,
+            score : 0,
             messages : ["Nooo!, Press the Yellow Buttons"]
         }
 
-        let display = function(){
+        function generate(){
+            document.getElementsByClassName("score")[0].innerHTML = "Score" + " " + " - " +  game.score;
+            document.getElementsByClassName("level")[0].innerHTML = "Level" + " " + " - " +  game.levelNum;
+            document.getElementsByClassName("head")[0].innerHTML = "The Game Of" + " " +  game.num + "'s";
+            let commons = document.getElementsByClassName('common');
+            for(let i=0; i<commons.length;i++){
+             commons[i].classList.remove('refresh');
+            }
             for(let i=0; i<=game.opList.length-1; i++){
-                document.getElementsByClassName("op")[i].innerHTML = game.opList[i] + game.num;
+               let x =  document.getElementsByClassName("op");
+                x[i].innerText = game.opList[i] + game.num;
+                x[i].onclick = function(){
+                 game.numList.current = operation(game.numList.current,game.num,game.opList[i]);
+                 let curr = document.getElementsByClassName("num")[1];
+                 curr.classList.add('added');
+                 curr.innerHTML = game.numList.current;
+                 setTimeout(function() {
+                 curr.classList.remove('added'); 
+                 }, 500);
+                 game.stepCount++;
+                 document.getElementsByClassName("steps")[0].innerHTML = "Steps" + " " + " - " +  game.stepCount;
+                 checkOperation();
+                 checkLength();
+                 checkEnd();
+                }
             }   
             document.getElementsByClassName("num")[0].innerHTML = game.numList.initial;
             document.getElementsByClassName("num")[1].innerHTML = game.numList.current;
             document.getElementsByClassName("num")[2].innerHTML = game.numList.final;
-        }
 
-        display();
+            document.getElementsByClassName("steps")[0].innerHTML = "Steps" + " " + " - " + game.stepCount;
+
+        };
+        generate();
             
-        
-        for(let i=0; i< game.opList.length ; i++){
-            document.getElementsByClassName("op")[i].onclick = function(){
-                game.numList.current = operation(game.numList.current,game.num,game.opList[i]);
-                document.getElementsByClassName("num")[1].innerHTML = game.numList.current;
-                check();
-            }
-        }         
 
-        let operation = (val1,val2,op) => {   
+        function operation(val1,val2,op){   
                 if(op == "+") return (val1 + val2);
                 else if(op == "-") return (val1 - val2);
                 else if(op == "÷") return Math.round(val1/val2);
                 else if(op == "×") return (val1*val2);
         }
         
-        let check = () =>{
+        function checkEnd(){
             if(game.numList.current==game.numList.final) {
-                game.numList = {initial : 6, current : 7, final : 34};
-                display();
+                checkLevel();
             }
         }
 
+        function checkLength(){
+           if(game.numList.current > 100000) disable(document.getElementsByClassName('op')[3]);
 
+           else  if(game.numList.current < 10000) enable(document.getElementsByClassName('op')[3]);
+        
 
+        }
+
+       function throwmessage(type){
+           if(type == "overflow") {console.log("band kar de bhai")}
+       }
+
+       function disable(el){
+            el.classList.add('disabled');
+       }
+
+       function enable(el){
+            el.classList.remove('disabled');
+       }
+       
+       function checkOperation(){
+           if(game.numList.current%game.num!==0) disable(document.getElementsByClassName('op')[2]);
+
+           else if(game.numList.current%game.num==0) enable(document.getElementsByClassName('op')[2]);
+       }
+
+       function checkLevel(){
+        game.levelNum +=1; 
+        game.score += Math.floor(100*game.levelNum/game.stepCount);
+        game.opList = ['+','-','÷','×'];
+        game.numList.initial = Math.floor(Math.random()*20 + 1);
+        game.numList.current = game.numList.initial;
+        game.numList.final = Math.floor(Math.random()*200 + 1);
+        game.stepCount = 0;
+        let commons = document.getElementsByClassName('common');
+        for(let i=0; i<commons.length;i++){
+            commons[i].classList.add('refresh');
+        }
+        setTimeout(generate,1000);        
+       }
 
     </script>
 </html>

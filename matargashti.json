@@ -1,0 +1,17 @@
+{
+  "name": "Matargashti",
+  "short_name": "Matargashti",
+  "theme_color": "#5959ffb8",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "landscape",
+  "scope": "/",
+  "start_url": "amoeba.html",
+	"icons": [
+    {
+      "src": "assets/Matargashti.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    }
+  ]
+}
