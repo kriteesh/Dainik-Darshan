@@ -57,7 +57,7 @@
                     cursor : pointer;
                     -webkit-tap-highlight-color: rgba(0,0,0,0);
                     -webkit-tap-highlight-color: transparent;
-                    transition : width 100ms, height 100ms,line-height 100ms;
+                    transition : width 100ms, height 100ms,line-height 100ms,opacity 500ms;
                     pointer-events: auto;
                 }
 
@@ -65,6 +65,8 @@
                     width : calc(var(--size)*1.1);
                     height : calc(var(--size)*1.1);
                     line-height : calc(var(--size)*1.1);
+                    opacity : 0.8;
+
                 }
 
                 .op:nth-child(1){
@@ -114,24 +116,6 @@
                     justify-self: end;
                 }
                 
-                .num:nth-child(2):after{
-                    position : absolute;
-                    content : "";
-                    height : calc(var(--size)*0.05);
-                    width : calc(var(--size)*0.05);
-                    top : 50%;
-                    left : 50%;
-                    background : white;
-                    box-shadow : 0 0 20px white;
-                    transform : translate(calc(var(--size)*4));
-                    animation : rota 10s linear infinite;
-                    
-                }
-
-                @keyframes rota{
-                    from{transform : rotate(0deg) translate(calc(var(--size)*4))}
-                    to{transform : rotate(360deg) translate(calc(var(--size)*4))}
-                }
 
                 .num:nth-child(2){
                 min-width : var(--size);
@@ -165,7 +149,7 @@
                     border: 2px solid white;
                     color: #d6b75b;
                     line-height :  var(--size);
-                    font-size : 4.5vh;
+                    font-size : 4vh;
                     text-align: center;
                 }
 
@@ -235,10 +219,10 @@
               @media (orientation: portrait) {
                   
                   .horz{
-                      top : 80%;
+                      top : 20%;
                   }
                   .horz,.verts{
-                      font-size: 3vh;
+                      font-size: 3vmin;
                   }
               }
         </style>
@@ -280,7 +264,7 @@
             document.getElementsByClassName("head")[0].innerHTML = "The Game Of" + " " +  game.num + "'s";
             let commons = document.getElementsByClassName('common');
             for(let i=0; i<commons.length;i++){
-             commons[i].classList.remove('refresh');
+             commons[i].classList.toggle('refresh');
             }
             for(let i=0; i<=game.opList.length-1; i++){
                let x =  document.getElementsByClassName("op");
@@ -355,7 +339,7 @@
         game.stepCount = 0;
         let commons = document.getElementsByClassName('ani');
         for(let i=0; i<commons.length;i++){
-            commons[i].classList.add('refresh');
+            commons[i].classList.toggle('refresh');
         }
         setTimeout(generate,1000);        
        }
