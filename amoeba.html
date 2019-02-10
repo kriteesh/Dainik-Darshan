@@ -142,28 +142,32 @@
                 .horz{
                     position : absolute;
                     top : 50%;
-                    width : calc(var(--size)*2); 
+                    min-width : calc(var(--size)*1.25); 
+                    width : auto;
                     height : var(--size);
                     margin-top  : calc(0px - var(--size)/2);
                     box-shadow: 0 0 40px indigo,0 0 40px indigo inset;
                     border: 2px solid white;
                     color: #d6b75b;
-                    line-height :  var(--size);
+                    line-height :  calc(0.5*var(--size));
                     font-size : 4vh;
                     text-align: center;
+                    padding : 1vw 0 1vw 0;
                 }
+
 
                 .score{
                     left : 0; 
                     border-radius : 0 var(--size) var(--size) 0;
                     border-left: 0;
-
+                    padding : 1vw 2vw 1vw 0;
                 }
 
                 .level{
                     right : 0;
                     border-radius : var(--size) 0 0 var(--size);
                     border-right : 0;
+                    padding : 1vw 0 1vw 2vw;
                 }
                 
                 .steps{
@@ -201,20 +205,36 @@
                 }
 
                 .refresh{
-                    animation : flash 1000ms linear 1;
+                    animation : heartBeat 1500ms linear 1;
                 }
-                @keyframes flash {
-                    from,
-                    50%,
-                    to {
-                        opacity: 1;
+                
+                @keyframes heartBeat {
+                    0% {
+                        -webkit-transform: scale(1);
+                        transform: scale(1);
                     }
 
-                    25%,
-                    75% {
-                        opacity: 0;
+                    14% {
+                        -webkit-transform: scale(1.3);
+                        transform: scale(1.3);
+                    }
+
+                    28% {
+                        -webkit-transform: scale(1);
+                        transform: scale(1);
+                    }
+
+                    42% {
+                        -webkit-transform: scale(1.3);
+                        transform: scale(1.3);
+                    }
+
+                    70% {
+                        -webkit-transform: scale(1);
+                        transform: scale(1);
                     }
                     }
+
 
               @media (orientation: portrait) {
                   
@@ -236,15 +256,15 @@
                 <div class="op common"></div>
             </div>
             <div class="nums">
-                <div class="num"></div>
-                <div class="num"></div>
-                <div class="num"></div>
+                <div class="num ani"></div>
+                <div class="num ani"></div>
+                <div class="num ani"></div>
             </div>  
             <div class="board">
-                <div class="verts steps ani"></div>
+                <div class="verts steps"></div>
                 <div class="horz level ani"></div>
                 <div class="horz score ani"></div>
-                <div class="verts head ani"></div>
+                <div class="verts head"></div>
             </div>      
         </div>
     </body>
@@ -259,10 +279,10 @@
         }
 
         function generate(){
-            document.getElementsByClassName("score")[0].innerHTML = "Score" + " " + " - " +  game.score;
-            document.getElementsByClassName("level")[0].innerHTML = "Level" + " " + " - " +  game.levelNum;
-            document.getElementsByClassName("head")[0].innerHTML = "The Game Of" + " " +  game.num + "'s";
-            let commons = document.getElementsByClassName('common');
+            document.getElementsByClassName("score")[0].innerHTML = "Score" + " " + "<br>" +  game.score;
+            document.getElementsByClassName("level")[0].innerHTML = "Round" + " " + "<br>" +  game.levelNum;
+            document.getElementsByClassName("head")[0].innerHTML = "The Game Of" + " " +  game.num + "'s";            
+            let commons = document.getElementsByClassName('ani');
             for(let i=0; i<commons.length;i++){
              commons[i].classList.toggle('refresh');
             }
@@ -303,6 +323,10 @@
         
         function checkEnd(){
             if(game.numList.current==game.numList.final) {
+                let commons = document.getElementsByClassName('ani');
+                for(let i=0; i<commons.length;i++){
+                    commons[i].classList.toggle('refresh');
+                }
                 checkLevel();
             }
         }
@@ -331,17 +355,14 @@
 
        function checkLevel(){
         game.levelNum +=1; 
+        if(game.levelNum > 10) game.num = 3;
         game.score += Math.floor(100*game.levelNum/game.stepCount);
         game.opList = ['+','-','÷','×'];
         game.numList.initial = Math.floor(Math.random()*20 + 1);
         game.numList.current = game.numList.initial;
         game.numList.final = Math.floor(Math.random()*200 + 1);
         game.stepCount = 0;
-        let commons = document.getElementsByClassName('ani');
-        for(let i=0; i<commons.length;i++){
-            commons[i].classList.toggle('refresh');
-        }
-        setTimeout(generate,1000);        
+        setTimeout(generate,1500);        
        }
 
     </script>
