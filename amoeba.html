@@ -327,7 +327,7 @@
                 for(let i=0; i<commons.length;i++){
                     commons[i].classList.toggle('refresh');
                 }
-                checkLevel();
+               checkLevel();
             }
         }
 
@@ -353,7 +353,7 @@
            else if(game.numList.current%game.num==0) enable(document.getElementsByClassName('op')[2]);
        }
 
-       function checkLevel(){
+       function checkLevel(){ 
         game.levelNum +=1; 
         if(game.levelNum > 10) game.num = 3;
         game.score += Math.floor(100*game.levelNum/game.stepCount);
@@ -362,7 +362,7 @@
         game.numList.current = game.numList.initial;
         game.numList.final = Math.floor(Math.random()*200 + 1);
         game.stepCount = 0;
-        setTimeout(generate,1500);        
+        generate();   
        }
 
     </script>
