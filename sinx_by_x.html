@@ -145,7 +145,7 @@
             border-width: 2px 2px 0 0;
             top: calc(50% - var(--size)/2);
             left: calc(50% - var(--size)/2);
-            height: 100px;
+            height: calc(var(--size)*0.707);
             transform-origin: 0 calc(var(--size)/2);
             transform: rotate(180deg);
             z-index: 20;
@@ -246,13 +246,13 @@
         <div class="header">The value of sinθ when angle is close to 0</div>
 
         <div class="first">
-            <div class="arcVal">Length of Arc : 0.977</div>
-            <div class="heightVal">Orange Line : 0.829</div>
+            <div class="arcVal">Length of Arc : 0.785</div>
+            <div class="heightVal">Orange Line : 0.707</div>
         </div>
 
         <div class="second">
-            <div class="angVal"> Radians : 0.977</div>
-            <div class="sinVal">Value of sin <strong>θ</strong> : 0.829</div>
+            <div class="angVal"> θ in Radians : 0.785</div>
+            <div class="sinVal">Value of sin <strong>θ</strong> : 0.707</div>
         </div>
 
         <div class="diagram">
@@ -265,7 +265,7 @@
         </div>
 
         <div class="angleMap">
-            <div class="label">45°</div>
+            <div class="label">θ = 45°</div>
             <input type="range" min="0" steps="180" max="90" value="45" class="slider" id="angleSlider" oninput=update(this.value)>
         </div>
 
@@ -277,11 +277,11 @@
             </div>
             <div class="equal">=</div>
             <div class="substitutes">
-                    <div class="sin">0.829</div>
-                    <div class="topBorder ang">0.977</div>
+                    <div class="sin">0.707</div>
+                    <div class="topBorder ang">0.785</div>
             </div>
             <div class="equal">=</div>
-            <div class="approximate">0.848</div>
+            <div class="approximate">0.901</div>
         </div>
 
     </div>
@@ -306,7 +306,7 @@
         z_1.innerHTML = " Length of Arc : " + " " + (val*Math.PI/180).toFixed(3);
         
         let z_2 = document.getElementsByClassName('angVal')[0];
-        z_2.innerHTML = " Radians : " + " " + (val*Math.PI/180).toFixed(3);
+        z_2.innerHTML = "θ in Radians : " + " " + (val*Math.PI/180).toFixed(3);
 
         let a_1 = document.getElementsByClassName('ang')[0];
         a_1.innerText = (val*Math.PI/180).toFixed(3);
@@ -324,7 +324,7 @@
 
         let l = document.getElementsByClassName('label')[0];
         l.style.left = (val - 45)*5/9 + "vw";
-        l.innerText = val + "°";
+        l.innerText = "θ = " + val + "°";
 
 
     }
