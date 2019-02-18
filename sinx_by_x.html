@@ -129,6 +129,14 @@
             border-radius :  0 var(--size) 0 0;
             z-index : 1;
             }
+        
+        .quadSmall:after{
+            content: "θ";
+            position: absolute;
+            top: 100%;
+            left: 0%;
+            transform : rotate(-30deg) translate(calc(var(--size)/6)) rotate(30deg);
+        }
 
         .arc{
             position : absolute;
@@ -151,27 +159,28 @@
         .sinTower{
             position: absolute;
             border: 1px dashed orange;
-            border-radius: 0 var(--size) 0 0;
-            border-width: 2px 2px 0 0;
+            border-color: white orange;
+            border-width: 0px 0px 1px 2px;
             top: calc(50% - var(--size)/2);
             left: calc(50% - var(--size)/2);
             height: calc(var(--size)*0.707);
             transform-origin: 0 calc(var(--size)/2);
-            transform: rotate(180deg);
+            transform: rotateY(180deg) rotate(180deg);
             z-index: 20;
+            width: calc(var(--size)*0.707);
         }
 
 
-        .sinTower:after{
+        /* .sinTower:after{
             position: absolute;
             content : "";
-            top : calc(100% - 7px);
+            top : calc(100% - 5px);
             left : -2.5px;
             width : 7px;
             height : 7px;
             border-radius : 50%;
             background : orange;
-        } 
+        }  */
 
         .angleMap{
             grid-row : 5 / 6;
@@ -333,6 +342,7 @@
         
         let k = document.getElementsByClassName('sinTower')[0];
         k.style.height = Math.sin(val*Math.PI/180).toFixed(3)*40 + "vh";
+        k.style.width = Math.cos(val*Math.PI/180).toFixed(3)*40 + "vh";
 
         let l = document.getElementsByClassName('label')[0];
         l.style.left = (val - 45)*5/9 + "vw";
