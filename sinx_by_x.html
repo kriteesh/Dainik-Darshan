@@ -66,6 +66,16 @@
             position : absolute;
             left: 50%;
         }
+        .sim:after{
+            content : "radius = 1 unit";
+            position : absolute;
+            width: var(--size);
+            left: calc(0px - var(--size)/2);
+            background: #9c27b061;
+            border-radius: 0 0 var(--size) var(--size);
+            padding-bottom : 0.2vh;
+            top: calc(var(--size)/1.9);
+        }
 
         .quadrant{
             position : absolute;
@@ -151,6 +161,7 @@
             z-index: 20;
         }
 
+
         .sinTower:after{
             position: absolute;
             content : "";
@@ -196,6 +207,7 @@
             height: 3vh;
             border-radius: 50%; 
             background: yellowgreen;
+            box-shadow : 0px 0px 5vh green;
             cursor: pointer;
             }
 
