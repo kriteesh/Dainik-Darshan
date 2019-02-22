@@ -306,7 +306,12 @@
     </div>
 </body>
 <script>
-    window.scrollTo(0,document.getElementsByClassName('container')[0].scrollHeight);
+    window.addEventListener("load",function() {
+    setTimeout(function(){
+        // This hides the address bar:
+        window.scrollTo(0, 1);
+    }, 0);
+});
     
     let update = (val) =>{
   
