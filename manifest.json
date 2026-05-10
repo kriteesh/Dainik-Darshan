@@ -1,13 +1,15 @@
 {
   "name": "सुडोकु खेलो",
   "short_name": "सुडोकु",
+  "description": "हिंदी सुडोकु पहेली",
+  "id": "/dainik-darshan/",
+  "start_url": "/dainik-darshan/sudoku.html",
+  "scope": "/dainik-darshan/",
   "theme_color": "#5959ffb8",
   "background_color": "#ffffff",
   "display": "standalone",
   "orientation": "portrait",
-  "scope": "/",
-  "start_url": "sudoku.html",
-	"icons": [
+  "icons": [
     {
       "src": "assets/sudokus.png",
       "type": "image/png",
