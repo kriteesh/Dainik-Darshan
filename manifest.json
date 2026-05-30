@@ -11,7 +11,7 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "assets/sudokus.png",
+      "src": "/dainik-darshan/assets/sudokus.png",
       "type": "image/png",
       "sizes": "192x192"
     }
