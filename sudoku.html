@@ -80,18 +80,18 @@
 				align-self: start;
 			}
 			.insertCell{
-				border-radius: 50%;
-				font-size: 4.5vh;
-				line-height: 7.7vh;
-				text-align: center;
-				cursor: pointer;
-				width: 8vh;
-				background: #5959ffb8;
-				margin: 2vw;
-				user-select: none;
-				color : white;
-				box-shadow: 2px 4px grey;
-				font-family: 'Khand', sans-serif;
+				    /* border-radius: 50%; */
+			    font-size: 26px;
+			    /* line-height: 7.7vh; */
+			    text-align: center;
+			    cursor: pointer;
+			    width: 5vh;
+			    background: #5959ffb8;
+			    margin: 2vw;
+			    user-select: none;
+			    color: white;
+			    box-shadow: 2px 4px grey;
+			    font-family: 'Khand', sans-serif;
 			}
 			.insertCell:active{
 				-webkit-transform:scale(0.9); 
@@ -387,12 +387,28 @@
 		
 	</script>
 	<script>
-			if('serviceWorker' in navigator) {
-			  navigator.serviceWorker
-					   .register('service-worker.js')
-					   .then(function() { console.log("Service Worker Registered"); });
-			}
-
+(function() {
+  if (!('serviceWorker' in navigator)) return;
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    registrations.forEach(function(reg) {
+      // Kill any SW whose scope is the root "/" — that's the rogue one
+      // Keep only the one scoped to /dainik-darshan/
+      var scope = reg.scope;
+      var isRootScope = scope === location.origin + '/' || scope === '/';
+      if (isRootScope) {
+        reg.unregister().then(function(success) {
+          if (success) console.log('[SW cleanup] Unregistered rogue root-scope SW:', scope);
+        });
+      }
+    });
+  });
+  // Register the new correctly-scoped SW
+  navigator.serviceWorker.register('/dainik-darshan/service-worker.js', {
+    scope: '/dainik-darshan/'
+  }).catch(function(err) {
+    console.warn('[SW] Registration failed:', err);
+  });
+})();
 </script>
 	
 </html>
